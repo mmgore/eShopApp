@@ -10,7 +10,7 @@ namespace Catalog.API.Interfaces
     {
         Task<IEnumerable<CatalogItem>> GetCatalogItems();
         Task<CatalogItem> GetCatalogItem();
-        Task<IEnumerable<CatalogItem>> GetCatalogByName(string name);
+        Task<IEnumerable<CatalogItem>> GetCatalogById(string id);
         Task<IEnumerable<CatalogItem>> GetCatalogByCategory(string category);
         Task CreateCatalogItem(CatalogItem item);
         Task<bool> UpdateCatalogItem(CatalogItem item);
