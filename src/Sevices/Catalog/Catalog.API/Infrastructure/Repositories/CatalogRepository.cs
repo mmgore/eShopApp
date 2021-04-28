@@ -1,5 +1,6 @@
 ﻿using Catalog.API.Entities;
 using Catalog.API.Interfaces;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,39 +17,44 @@ namespace Catalog.API.Infrastructure.Repositories
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public async Task<CatalogItem> GetCatalogItem(string id)
+            => await _context.CatalogItems.Find(c => c.Id == id).FirstOrDefaultAsync();
+
+        public async Task<IEnumerable<CatalogItem>> GetCatalogItems()
+            => await _context.CatalogItems.Find(c => true).ToListAsync();
+
         public async Task CreateCatalogItem(CatalogItem item)
         {
             await _context.CatalogItems.InsertOneAsync(item);
         }
 
-        public Task<bool> DeleteCatalogItem(string id)
+        public async Task<bool> DeleteCatalogItem(string id)
         {
-            throw new NotImplementedException();
+            FilterDefinition<CatalogItem> filter = Builders<CatalogItem>.Filter.Eq(c => c.Id, id);
+            var deleteResult = await _context.CatalogItems.DeleteOneAsync(filter);
+
+            return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
         }
 
-        public Task<IEnumerable<CatalogItem>> GetCatalogByCategory(string category)
+        public async Task<IEnumerable<CatalogItem>> GetCatalogByCategory(string category)
         {
-            throw new NotImplementedException();
+            FilterDefinition<CatalogItem> filter = Builders<CatalogItem>.Filter.Eq(c => c.Category, category);
+
+            return await _context.CatalogItems.Find(filter).ToListAsync();
         }
 
-        public Task<IEnumerable<CatalogItem>> GetCatalogById(string id)
+        public async Task<IEnumerable<CatalogItem>> GetCatalogById(string id)
         {
-            throw new NotImplementedException();
+            FilterDefinition<CatalogItem> filter = Builders<CatalogItem>.Filter.Eq(c => c.Id, id);
+
+            return await _context.CatalogItems.Find(filter).ToListAsync();
         }
 
-        public Task<CatalogItem> GetCatalogItem()
+        public async Task<bool> UpdateCatalogItem(CatalogItem item)
         {
-            throw new NotImplementedException();
-        }
+            var updateResult = await _context.CatalogItems.ReplaceOneAsync(c => c.Id == item.Id, item);
 
-        public Task<IEnumerable<CatalogItem>> GetCatalogItems()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> UpdateCatalogItem(CatalogItem item)
-        {
-            throw new NotImplementedException();
+            return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
         }
     }
 }
