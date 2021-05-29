@@ -17,9 +17,6 @@ namespace Catalog.API.Infrastructure.Repositories
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<CatalogItem> GetCatalogItem(string id)
-            => await _context.CatalogItems.Find(c => c.Id == id).FirstOrDefaultAsync();
-
         public async Task<IEnumerable<CatalogItem>> GetCatalogItems()
             => await _context.CatalogItems.Find(c => true).ToListAsync();
 
@@ -43,11 +40,11 @@ namespace Catalog.API.Infrastructure.Repositories
             return await _context.CatalogItems.Find(filter).ToListAsync();
         }
 
-        public async Task<IEnumerable<CatalogItem>> GetCatalogById(string id)
+        public async Task<CatalogItem> GetCatalogById(string id)
         {
             FilterDefinition<CatalogItem> filter = Builders<CatalogItem>.Filter.Eq(c => c.Id, id);
 
-            return await _context.CatalogItems.Find(filter).ToListAsync();
+            return await _context.CatalogItems.Find(filter).FirstOrDefaultAsync();
         }
 
         public async Task<bool> UpdateCatalogItem(CatalogItem item)

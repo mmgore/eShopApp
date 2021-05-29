@@ -9,8 +9,7 @@ namespace Catalog.API.Interfaces
     public interface ICatalogRepository
     {
         Task<IEnumerable<CatalogItem>> GetCatalogItems();
-        Task<CatalogItem> GetCatalogItem(string id);
-        Task<IEnumerable<CatalogItem>> GetCatalogById(string id);
+        Task<CatalogItem> GetCatalogById(string id);
         Task<IEnumerable<CatalogItem>> GetCatalogByCategory(string category);
         Task CreateCatalogItem(CatalogItem item);
         Task<bool> UpdateCatalogItem(CatalogItem item);
