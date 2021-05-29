@@ -97,12 +97,12 @@ namespace Catalog.UnitTests.Application
         private CatalogItem fakeCatalogItem => new()
         {
             Category = "Phone",
-            Description = "Nice Phone",
+            Description = "Fake Phone",
             Id = "23Qxy-411",
-            ImageFile = "image.png",
-            Name = "Iphone 11",
+            ImageFile = "phone.png",
+            Name = "FPhone 11",
             Price = 999,
-            Summary = "Buy It!!"
+            Summary = "fake summary!!"
         };
     }
 }
