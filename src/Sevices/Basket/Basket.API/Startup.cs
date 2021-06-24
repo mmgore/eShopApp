@@ -1,3 +1,5 @@
+using Basket.API.Infrastructure.Repositories;
+using Basket.API.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +31,8 @@ namespace Basket.API
             {
                 opt.Configuration = Configuration.GetValue<string>("CacheSettings:ConnectionString");
             });
+
+            services.AddScoped<IBasketRepository, BasketRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
