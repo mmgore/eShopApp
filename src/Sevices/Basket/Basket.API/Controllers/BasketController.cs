@@ -25,8 +25,14 @@ namespace Basket.API.Controllers
         }
         [HttpGet]
         [ProducesResponseType(typeof(CustomerBasket), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<CustomerBasket>> GetBasket(string username)
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult<CustomerBasket>> GetBasketAsync(string username)
         {
+            if (string.IsNullOrEmpty(username))
+            {
+                return BadRequest();
+            }
+
             var basket = await _basketRepository.GetBasketAsync(username);
             return Ok(basket ?? new CustomerBasket(username));
         }
@@ -37,10 +43,17 @@ namespace Basket.API.Controllers
         {
             return Ok(await _basketRepository.UpdateBasket(basketItem));
         }
+
         [HttpDelete]
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult> DeleteBasketAsync(string username)
         {
+            if (string.IsNullOrEmpty(username))
+            {
+                return BadRequest();
+            }
+
             await _basketRepository.DeleteBasketAsync(username);
             return Ok();
         }
