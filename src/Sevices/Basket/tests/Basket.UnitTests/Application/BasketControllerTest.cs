@@ -1,5 +1,6 @@
 ﻿using Basket.API.Controllers;
 using Basket.API.Entities;
+using Basket.API.Infrastructure;
 using Basket.API.Interfaces;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,12 @@ namespace Basket.UnitTests.Application
     {
         private readonly Mock<IBasketRepository> _basketRepositoryMock;
         private readonly Mock<ILogger<BasketController>> _loggerMock;
+        private readonly Mock<IDiscountgRPCService> _discountMock; 
         public BasketControllerTest()
         {
             _basketRepositoryMock = new Mock<IBasketRepository>();
             _loggerMock = new Mock<ILogger<BasketController>>();
+            _discountMock = new Mock<IDiscountgRPCService>();
         }
 
         [Fact]
@@ -30,7 +33,7 @@ namespace Basket.UnitTests.Application
             _basketRepositoryMock.Setup(x => x.GetBasketAsync(It.IsAny<string>()))
                 .Returns(Task.FromResult(customerBasket));
             //act
-            var controller = new BasketController(_basketRepositoryMock.Object, _loggerMock.Object);
+            var controller = new BasketController(_basketRepositoryMock.Object, _loggerMock.Object, _discountMock.Object);
 
             var actionResult = await controller.GetBasketAsync(customerBasket.Username);
 
@@ -48,7 +51,7 @@ namespace Basket.UnitTests.Application
             _basketRepositoryMock.Setup(x => x.GetBasketAsync(customerBasket.Username))
                 .Returns(Task.FromResult(customerBasket));
             //act
-            var controller = new BasketController(_basketRepositoryMock.Object, _loggerMock.Object);
+            var controller = new BasketController(_basketRepositoryMock.Object, _loggerMock.Object, _discountMock.Object);
 
             var actionResult = await controller.GetBasketAsync(customerBasket.Username);
 
@@ -63,9 +66,10 @@ namespace Basket.UnitTests.Application
         {
             //arange
             var customerBasket = fakeCustomerBasket;
-
+            _discountMock.Setup(x => x.GetDiscount(It.IsAny<string>()))
+                .Returns(Task.FromResult(fakeCouponModel));
             //act
-            var controller = new BasketController(_basketRepositoryMock.Object, _loggerMock.Object);
+            var controller = new BasketController(_basketRepositoryMock.Object, _loggerMock.Object, _discountMock.Object);
 
             var actionResult = await controller.UpdateBasketAsync(customerBasket);
 
@@ -82,7 +86,7 @@ namespace Basket.UnitTests.Application
             var customerBasket = fakeCustomerBasket;
 
             //act
-            var controller = new BasketController(_basketRepositoryMock.Object, _loggerMock.Object);
+            var controller = new BasketController(_basketRepositoryMock.Object, _loggerMock.Object, _discountMock.Object);
 
             var actionResult = await controller.DeleteBasketAsync(customerBasket.Username);
 
@@ -99,7 +103,7 @@ namespace Basket.UnitTests.Application
             var customerBasket = fakeCustomerBasket;
             customerBasket.Username = null;
             //act
-            var controller = new BasketController(_basketRepositoryMock.Object, _loggerMock.Object);
+            var controller = new BasketController(_basketRepositoryMock.Object, _loggerMock.Object, _discountMock.Object);
 
             var actionResult = await controller.DeleteBasketAsync(customerBasket.Username);
 
@@ -116,5 +120,7 @@ namespace Basket.UnitTests.Application
             Items = new() { fakeBasketItem },
             Username = fakeUser
         };
+
+        private Discount.gRPC.Protos.CouponModel fakeCouponModel => new() { Id = 99, Amount = 100, Description = "fake discount", ProductName = "fakePhone" };
     }
 }
