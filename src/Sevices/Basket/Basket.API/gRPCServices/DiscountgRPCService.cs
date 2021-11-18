@@ -1,10 +1,11 @@
-﻿using Discount.gRPC.Protos;
+﻿using Basket.API.Infrastructure;
+using Discount.gRPC.Protos;
 using System;
 using System.Threading.Tasks;
 
 namespace Basket.API.gRPCServices
 {
-    public class DiscountgRPCService
+    public class DiscountgRPCService : IDiscountgRPCService
     {
         private readonly DiscountProtoService.DiscountProtoServiceClient _discountProtoServiceClient;
 
