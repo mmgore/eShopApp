@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ordering.Infrastructure.Repositories
 {
-    internal class OrderRepository : IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private readonly IRepository<Order> _repository;
         public OrderRepository(IRepository<Order> repository)
