@@ -14,7 +14,7 @@ namespace Ordering.Infrastructure.Repositories
         private DbSet<T> _dbSet;
         public Repository(OrderingContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
             _dbSet = context.Set<T>();
         }
         public async Task DeleteAsync(Guid id)

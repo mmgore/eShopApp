@@ -1,8 +1,5 @@
 ﻿using Ordering.Domain.SeedWork;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Ordering.Infrastructure.Repositories
@@ -11,15 +8,15 @@ namespace Ordering.Infrastructure.Repositories
     {
         private bool _disposed = false;
 
-        private readonly OrderingContext _appDbContext;
-        public UnitOfWork(OrderingContext appDbContext)
+        private readonly OrderingContext _orderDbContext;
+        public UnitOfWork(OrderingContext orderDbContext)
         {
-            _appDbContext = appDbContext;
+            _orderDbContext = orderDbContext ?? throw new ArgumentNullException(nameof(orderDbContext));
         }
 
         public async Task SaveChangesAsync()
         {
-            await _appDbContext.SaveChangesAsync();
+            await _orderDbContext.SaveChangesAsync();
         }
 
 
@@ -29,7 +26,7 @@ namespace Ordering.Infrastructure.Repositories
             {
                 if (disposing)
                 {
-                    _appDbContext.Dispose();
+                    _orderDbContext.Dispose();
                 }
             }
             _disposed = true;
