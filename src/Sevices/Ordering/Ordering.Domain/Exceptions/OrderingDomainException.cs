@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ordering.Domain.Exceptions
 {
-    internal class OrderingDomainException : Exception
+    public class OrderingDomainException : Exception
     {
         public OrderingDomainException()
         {
