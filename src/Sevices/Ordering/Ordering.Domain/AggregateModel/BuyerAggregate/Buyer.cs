@@ -10,7 +10,6 @@ namespace Ordering.Domain.AggregateModel.BuyerAggregate
 {
     public class Buyer : Entity
     {
-        public Guid Id { get; set; }
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string CardName { get; private set; }
