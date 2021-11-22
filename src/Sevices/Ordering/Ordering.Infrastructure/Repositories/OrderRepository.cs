@@ -28,6 +28,9 @@ namespace Ordering.Infrastructure.Repositories
         public async Task<IEnumerable<Order>> GetOrders()
             => await _repository.GetAllAsync();
 
+        public async Task<IEnumerable<Order>> GetOrdersByUserName(string username)
+            => await _repository.GetAllAsync(x => x.Username == username);
+
         public async Task InsertAsync(Order order)
         {
             await _repository.InsertAsync(order);

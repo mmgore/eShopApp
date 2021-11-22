@@ -13,5 +13,6 @@ namespace Ordering.Domain.AggregateModel.OrderAggregate
         Task<Order> GetOrderById(Guid id);
         Task<Order> GetOrder(Expression<Func<Order, bool>> predicate);
         Task<IEnumerable<Order>> GetOrders();
+        Task<IEnumerable<Order>> GetOrdersByUserName(string username);
     }
 }
