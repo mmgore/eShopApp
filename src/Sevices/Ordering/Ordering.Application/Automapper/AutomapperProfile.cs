@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
 using Ordering.Application.Commads.CheckoutOrder;
+using Ordering.Application.Commads.UpdateOrder;
 using Ordering.Application.Queries.GetOrdersByUsername;
 using Ordering.Domain.AggregateModel.OrderAggregate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ordering.Application.Automapper
 {
@@ -16,6 +12,7 @@ namespace Ordering.Application.Automapper
         {
             CreateMap<GetOrdersByUsernameDto, Order>().ReverseMap();
             CreateMap<CheckoutOrderCommand, Order>().ReverseMap();
+            CreateMap<UpdateOrderCommand, Order>().ReverseMap();
         }
     }
 }
