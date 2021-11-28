@@ -1,15 +1,19 @@
+using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Ordering.Application.Automapper;
+using Ordering.Application.Commads.CheckoutOrder;
+using Ordering.Application.Validations;
+using Ordering.Domain.AggregateModel.BuyerAggregate;
+using Ordering.Domain.AggregateModel.OrderAggregate;
+using Ordering.Domain.SeedWork;
+using Ordering.Infrastructure.Repositories;
+using System.Reflection;
 
 namespace Ordering.API
 {
@@ -26,7 +30,17 @@ namespace Ordering.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(vf => vf.RegisterValidatorsFromAssemblyContaining<CheckoutOrderCommandValidator>());
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IBuyerRepository, BuyerRepository>();
+
+            services.AddAutoMapper(new Assembly[] { typeof(AutomapperProfile).GetTypeInfo().Assembly });
+
+            services.AddMediatR(typeof(CheckoutOrderCommandHandler).GetTypeInfo().Assembly);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ordering.API", Version = "v1" });
