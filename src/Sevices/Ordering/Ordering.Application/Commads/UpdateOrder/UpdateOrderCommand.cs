@@ -6,7 +6,6 @@ namespace Ordering.Application.Commads.UpdateOrder
     public class UpdateOrderCommand : IRequest
     {
         public Guid Id { get; set; }
-        public Guid BuyerId { get; private set; }
         public string Username { get; private set; }
         public decimal TotalPrice { get; private set; }
         public string EmailAddress { get; private set; }
