@@ -12,5 +12,10 @@ namespace Ordering.Infrastructure
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<Buyer> Buyers { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrderingContext).Assembly);
+        }
     }
 }
