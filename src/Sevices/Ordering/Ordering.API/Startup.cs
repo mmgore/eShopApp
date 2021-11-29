@@ -2,6 +2,7 @@ using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,6 +13,7 @@ using Ordering.Application.Validations;
 using Ordering.Domain.AggregateModel.BuyerAggregate;
 using Ordering.Domain.AggregateModel.OrderAggregate;
 using Ordering.Domain.SeedWork;
+using Ordering.Infrastructure;
 using Ordering.Infrastructure.Repositories;
 using System.Reflection;
 
@@ -39,6 +41,9 @@ namespace Ordering.API
             services.AddScoped<IBuyerRepository, BuyerRepository>();
 
             services.AddAutoMapper(new Assembly[] { typeof(AutomapperProfile).GetTypeInfo().Assembly });
+
+            services.AddDbContext<OrderingContext>(opt 
+                => opt.UseSqlServer(Configuration.GetConnectionString("OrderingConnectionString")));
 
             services.AddMediatR(typeof(CheckoutOrderCommandHandler).GetTypeInfo().Assembly);
             services.AddSwaggerGen(c =>
