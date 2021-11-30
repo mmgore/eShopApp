@@ -11,7 +11,7 @@ namespace Ordering.Infrastructure
 {
     public class OrderingContextSeed
     {
-        public static async Task SeedAsync(OrderingContext orderingContext, ILogger<OrderingContext> logger)
+        public static async Task SeedAsync(OrderingContext orderingContext, ILogger<OrderingContextSeed> logger)
         {
             if (!orderingContext.Orders.Any())
             {
