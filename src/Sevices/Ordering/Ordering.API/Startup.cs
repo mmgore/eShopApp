@@ -9,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Ordering.Application.Automapper;
 using Ordering.Application.Commads.CheckoutOrder;
+using Ordering.Application.Interfaces;
+using Ordering.Application.Utilities;
 using Ordering.Application.Validations;
 using Ordering.Domain.AggregateModel.BuyerAggregate;
 using Ordering.Domain.AggregateModel.OrderAggregate;
@@ -39,6 +41,7 @@ namespace Ordering.API
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IBuyerRepository, BuyerRepository>();
+            services.AddScoped<IMailSender, SendEmailHandler>();
 
             services.AddAutoMapper(new Assembly[] { typeof(AutomapperProfile).GetTypeInfo().Assembly });
 
