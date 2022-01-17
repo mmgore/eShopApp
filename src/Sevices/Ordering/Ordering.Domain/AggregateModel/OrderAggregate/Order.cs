@@ -28,13 +28,13 @@ namespace Ordering.Domain.AggregateModel.OrderAggregate
             TotalPrice = (totalPrice > 0) ? totalPrice
                                           : throw new OrderingDomainException("TotalPrice must be greater than 0");
             EmailAddress = !string.IsNullOrWhiteSpace(emailAddress) ? emailAddress
-                                                            : throw new OrderingDomainException("EmailAddress cannot be null"); ;
+                                                            : throw new OrderingDomainException("EmailAddress cannot be null");
             Country = !string.IsNullOrWhiteSpace(country) ? country
-                                                            : throw new OrderingDomainException("Country cannot be null"); ;
+                                                            : throw new OrderingDomainException("Country cannot be null"); 
             State = !string.IsNullOrWhiteSpace(state) ? state
-                                                            : throw new OrderingDomainException("State cannot be null"); ;
+                                                            : throw new OrderingDomainException("State cannot be null");
             ZipCode = !string.IsNullOrWhiteSpace(zipCode) ? zipCode
-                                                            : throw new OrderingDomainException("ZipCode cannot be null"); ;
+                                                            : throw new OrderingDomainException("ZipCode cannot be null");
         }
 
         public static Order Create(Guid buyerId, string username, decimal totalPrice, string emailAddress, string country, string state, string zipCode)

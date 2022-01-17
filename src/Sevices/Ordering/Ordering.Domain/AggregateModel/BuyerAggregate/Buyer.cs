@@ -27,13 +27,13 @@ namespace Ordering.Domain.AggregateModel.BuyerAggregate
             FirstName = !string.IsNullOrWhiteSpace(firstName) ? firstName
                                                               : throw new BuyerDomainException("FirstName cannot be null");
             LastName = !string.IsNullOrWhiteSpace(lastName) ? lastName
-                                                              : throw new BuyerDomainException("LastName cannot be null"); ;
+                                                              : throw new BuyerDomainException("LastName cannot be null");
             CardName = !string.IsNullOrWhiteSpace(cardName) ? cardName
-                                                              : throw new BuyerDomainException("CardName cannot be null"); ;
+                                                              : throw new BuyerDomainException("CardName cannot be null");
             Expiration = !string.IsNullOrWhiteSpace(expiration) ? expiration
-                                                              : throw new BuyerDomainException("Expiration cannot be null"); ;
+                                                              : throw new BuyerDomainException("Expiration cannot be null");
             CVV = !string.IsNullOrWhiteSpace(cvv) ? cvv
-                                                              : throw new BuyerDomainException("CVV cannot be null"); ;
+                                                              : throw new BuyerDomainException("CVV cannot be null");
             PaymentMethod = paymentMethod;
         }
 
