@@ -88,3 +88,12 @@ services:
     ports:
       - "5003:80"
 
+  ordering.api:
+    container_name: ordering.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+       - "ConnectionStrings:OrderingConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=AdmiN12345;"
+    depends_on:
+      - orderdb
+    ports:
+      - "5004:80"

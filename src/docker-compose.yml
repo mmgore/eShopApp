@@ -8,7 +8,7 @@ services:
     image: redis:alpine
 
   discountdb:
-    image: postgres
+    image: postgres:13.5-alpine
 
   orderdb:
     image: mcr.microsoft.com/mssql/server:2017-latest
@@ -41,7 +41,14 @@ services:
       context: .
       dockerfile: Sevices/Discount/Discount.gRPC/Dockerfile
 
+  ordering.api:
+    image: ${DOCKER_REGISTRY-}orderingapi
+    build:
+      context: .
+      dockerfile: Sevices/Ordering/Ordering.API/Dockerfile
+
 volumes:
   mongo_data:
   postgres_data:
   pgadmin_data:
+
